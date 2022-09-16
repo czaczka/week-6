@@ -1,0 +1,10 @@
+<div>
+    <label for="messagecontent">New message</label>
+    <input type="text" [(ngModel)]="messagecontent" name="messagecontent" id="messagecontent" />
+</div>
+<div>
+    <button (click)="chat(messagecontent)">Chat</button>
+</div>
+<div>
+    <li *ngFor="let message of messages">{{message}}</li>
+</div>
