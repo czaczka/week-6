@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../socket.service';
+import { FormsModule } from '@angular/forms';
 
 const SERVER_URL = 'http://localhost:3000';
 
@@ -9,19 +10,25 @@ const SERVER_URL = 'http://localhost:3000';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  private socket;
   messagecontent:string="";
   messages:string[]=[];
-  constructor(private socketservice:SocketService) { }
+  ioConnection:any;
+  constructor(private socketService:SocketService) { }
 
   ngOnInit(): void {
-    this.socketservice.initSocket();
-    this.socketservice.getMessage((m)=>{this.messages.push(m)});
+    this.initIoConnection();
+  }
+  private initIoConnection(){
+    // this.socketService.initSocket();
+    this.ioConnection = this.socketService.getMessage()
+      .subscribe((message:any)=> {
+        this.messages.push(message);
+      });
   }
 
   chat(){
     if(this.messagecontent){
-      this.socketservice.sendMessage(this.messagecontent);
+      this.socketService.send(this.messagecontent);
       this.messagecontent = "";
     } else {
       console.log('no message');

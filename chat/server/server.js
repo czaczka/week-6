@@ -8,7 +8,7 @@ const io = require('socket.io')(http,{
         methods: ["GET", "POST"],
     }
 });
-// const sockets = require('./socket.js');
+const sockets = require('./socket.js');
 const server = require('./listen.js');
 // const request = require('request');
 
@@ -16,6 +16,6 @@ const PORT = 3000;
 
 app.use(cors());
 
-// sockets.connect(io, PORT);
+sockets.connect(io, PORT);
 
 server.listen(http,PORT);
